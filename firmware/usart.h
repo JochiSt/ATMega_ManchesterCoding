@@ -40,11 +40,6 @@ struct {
 	
 	#include <avr/interrupt.h>
 	#include <avr/pgmspace.h>
-	#include <stdlib.h>
-	#include <stdarg.h>
-	#include <ctype.h>
-	#include <string.h>
-	#include <avr/io.h>
 
 //----------------------------------------------------------------------------
 
