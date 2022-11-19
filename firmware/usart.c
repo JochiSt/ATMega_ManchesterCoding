@@ -1,52 +1,62 @@
 /*----------------------------------------------------------------------------
  Copyright:      Radig Ulrich  mailto: mail@ulrichradig.de
  Author:         Radig Ulrich
- Remarks:        
+ Remarks:
  known Problems: none
  Version:        14.06.2007
  Description:    RS232 Routinen
 
- Dieses Programm ist freie Software. Sie kˆnnen es unter den Bedingungen der 
- GNU General Public License, wie von der Free Software Foundation verˆffentlicht, 
- weitergeben und/oder modifizieren, entweder gem‰ﬂ Version 2 der Lizenz oder 
- (nach Ihrer Option) jeder sp‰teren Version. 
+ Dieses Programm ist freie Software. Sie k√∂nnen es unter den Bedingungen der
+ GNU General Public License, wie von der Free Software Foundation ver√∂ffentlicht,
+ weitergeben und/oder modifizieren, entweder gem√§√ü Version 2 der Lizenz oder
+ (nach Ihrer Option) jeder sp√§teren Version.
 
- Die Verˆffentlichung dieses Programms erfolgt in der Hoffnung, 
- daﬂ es Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE, 
- sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT 
- F‹R EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License. 
+ Die Ver√∂ffentlichung dieses Programms erfolgt in der Hoffnung,
+ da√ü es Ihnen von Nutzen sein wird, aber OHNE IRGENDEINE GARANTIE,
+ sogar ohne die implizite Garantie der MARKTREIFE oder der VERWENDBARKEIT
+ F√úR EINEN BESTIMMTEN ZWECK. Details finden Sie in der GNU General Public License.
 
- Sie sollten eine Kopie der GNU General Public License zusammen mit diesem 
- Programm erhalten haben. 
- Falls nicht, schreiben Sie an die Free Software Foundation, 
- Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA. 
+ Sie sollten eine Kopie der GNU General Public License zusammen mit diesem
+ Programm erhalten haben.
+ Falls nicht, schreiben Sie an die Free Software Foundation,
+ Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307, USA.
 ------------------------------------------------------------------------------*/
 
 #include "usart.h"
+#include <stdlib.h>
+#include <stdarg.h>
+#include <ctype.h>
+#include <string.h>
+#include <avr/io.h>
 
 volatile unsigned char buffercounter = 0;
 char usart_rx_buffer[BUFFER_SIZE];
 
 //----------------------------------------------------------------------------
-//Init serielle Schnittstelle
-void usart_init(unsigned long baudrate) 
-{ 
-	//Teiler wird gesetzt 
-	UBRR0L = (SYSCLK / (baudrate * 16L) - 1) & 0x00FF;
-	UBRR0H = (((SYSCLK / (baudrate * 16L) - 1) & 0xFF00)>>8);
-  	//Enable TXEN im Register UCR TX-Data Enable
+//Initialisation of Serial Port
+void usart_init(unsigned long baudrate)
+{
+	// Set the Divider
+	UBRR0L = (F_CPU / (baudrate * 16L) - 1) & 0x00FF;
+	UBRR0H = (((F_CPU / (baudrate * 16L) - 1) & 0xFF00)>>8);
+	// Enable TXEN in the UCR TX-Data enable register
 	UCR = (1 << TXEN |1 << RXEN | 1<< RXCIE);
 }
 
 //----------------------------------------------------------------------------
-//Routine f¸r die Serielle Ausgabe eines Zeichens
+
+/**
+ * print a single character on the serial port.
+ * function ensures \r\n line endings
+ * @param c character to be printed
+ */
 void usart_write_char(char c)
 {
 	if (c == '\n')
 		usart_write_char('\r');
-	//Warten solange bis Zeichen gesendet wurde
+	// wait until previous character is sent
 	while(!(USR & (1<<UDRE)));
-	//Ausgabe des Zeichens
+	// output of character
 	UDR = c;
 	return;
 }
@@ -55,8 +65,8 @@ void usart_write_char(char c)
 void usart_write_P (const char *Buffer,...)
 {
 	va_list ap;
-	va_start (ap, Buffer);	
-	
+	va_start (ap, Buffer);
+
 	int format_flag;
 	char str_buffer[10];
 	char str_null_buffer[10];
@@ -65,19 +75,19 @@ void usart_write_P (const char *Buffer,...)
 	int tmp = 0;
 	char by;
 	char *ptr;
-		
-	//Ausgabe der Zeichen
+
+	// output of all characters
     for(;;)
 	{
 		by = pgm_read_byte(Buffer++);
 		if(by==0) break; // end of format string
-            
+
 		if (by == '%')
 		{
             by = pgm_read_byte(Buffer++);
 			if (isdigit(by)>0)
 				{
-                                 
+
  				str_null_buffer[0] = by;
 				str_null_buffer[1] = '\0';
 				move = atoi(str_null_buffer);
@@ -129,18 +139,21 @@ void usart_write_P (const char *Buffer,...)
 					move =0;
 					break;
 				}
-			
-			}	
+
+			}
 		else
 		{
-			usart_write_char ( by );	
+			usart_write_char ( by );
 		}
 	}
 	va_end(ap);
 }
 
 //----------------------------------------------------------------------------
-//Ausgabe eines Strings
+/**
+ * output of a string
+ * @param str string, which should be sent
+ */
 void usart_write_str(char *str)
 {
 	while (*str)
@@ -150,12 +163,14 @@ void usart_write_str(char *str)
 }
 
 //----------------------------------------------------------------------------
-//Empfang eines Zeichens
+/**
+ * Interrupt routine for receiving a single character
+ */
 ISR (USART_RX)
 {
     unsigned char receive_char;
     receive_char = (UDR);
-    
+
     #if USART_ECHO
     usart_write_char(receive_char);
     #endif
@@ -163,9 +178,9 @@ ISR (USART_RX)
     if (usart_status.usart_ready)
     {
         usart_status.usart_rx_ovl = 1;
-        return; 
+        return;
     }
-    
+
     if (receive_char == 0x08)
     {
         if (buffercounter) buffercounter--;
@@ -177,14 +192,14 @@ ISR (USART_RX)
         usart_rx_buffer[buffercounter] = 0;
         buffercounter = 0;
         usart_status.usart_ready = 1;
-        return;    
+        return;
     }
 
     if (buffercounter < BUFFER_SIZE - 1)
     {
-        usart_rx_buffer[buffercounter++] = receive_char;    
+        usart_rx_buffer[buffercounter++] = receive_char;
     }
-return;
+    return;
 }
 
 
