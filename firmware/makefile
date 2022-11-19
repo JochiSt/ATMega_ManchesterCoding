@@ -3,25 +3,25 @@ MCU    = atmega328p
 F_CPU  = 16000000
 TARGET = slave
 
-CC      = avr-gcc 
-OBJCOPY = avr-objcopy 
+CC      = avr-gcc
+OBJCOPY = avr-objcopy
 
-INCLUDES = -I./ -I/usr/lib/avr/include 
-CFLAGS   = -std=c99 -g -Wall -mmcu=$(MCU) -DF_CPU=$(F_CPU) $(INCLUDES) -Os 
-LDFLAGS  = -Wl,-gc-sections -Wl,-relax 
+INCLUDES = -I./ -I/usr/lib/avr/include
+CFLAGS   = -std=c99 -g -Wall -mmcu=$(MCU) -DF_CPU=$(F_CPU) $(INCLUDES) -Os
+LDFLAGS  = -Wl,-gc-sections -Wl,-relax
 
 OBJECT_FILES = main.o
 
-all: $(TARGET).hex size
+Release: $(TARGET).hex
 
-size:
-	@if [ -f $(TARGET).obj ]; then avr-size -C --mcu=$(MCU) $(TARGET).obj; fi
+all: $(TARGET).hex
 
-clean: 
+clean:
 	rm -rf *.o *.hex *.obj
 
-%.hex: %.obj 
-	$(OBJCOPY) -R .eeprom -O ihex $< $@ 
+%.hex: %.obj
+	avr-size -C --mcu=$(MCU) $(TARGET).obj
+	$(OBJCOPY) -R .eeprom -O ihex $< $@
 
 %.obj: $(OBJECT_FILES)
-	$(CC) $(CFLAGS) $(OBJECT_FILES) $(LDFLAGS) -o $@ 
+	$(CC) $(CFLAGS) $(OBJECT_FILES) $(LDFLAGS) -o $@
