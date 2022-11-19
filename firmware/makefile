@@ -1,7 +1,7 @@
 DEVICE = atmega328p
 MCU    = atmega328p
 F_CPU  = 16000000
-TARGET = slave
+TARGET = manchester
 
 CC      = avr-gcc
 OBJCOPY = avr-objcopy
