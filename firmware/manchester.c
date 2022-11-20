@@ -6,7 +6,7 @@
 #include <avr/interrupt.h>
 
 /**
- * Initialise everything, that we can run the Manchester Encoding and Decoding
+ * Initialize everything, that we can run the Manchester Encoding and Decoding
  */
 void manchester_init(unsigned long datarate){
 
@@ -28,12 +28,15 @@ void manchester_init(unsigned long datarate){
     man_TXbusy = 0;        // we are not busy sending a byte
 }
 
+/**
+ * write a single character via the Manchester encoding output
+ */
 void manchester_write_char(char c){
     // wait until the last byte got sent out
     while(man_TXbusy){
     }
     man_TXbyte = c;        // put the new byte into the TX chain
-    man_TXbusy = 1;
+    man_TXbusy = 1;        // indicate that we want to transmit a new byte
 }
 
 /**
@@ -79,18 +82,20 @@ ISR(TIMER0_COMPA_vect){
             // if we are no longer busy, continuously transmit zeros
             man_TXbit = 0;
         }
+        // set the proper output
         manchester_setOutputPin(man_TXbit, man_TXbitphase);
 
     // second half of the TX bit
     }else{
         man_TXbitphase = 0;
+        // set the proper output
         manchester_setOutputPin(man_TXbit, man_TXbitphase);
 
         // if we have all bits transmitted, we are done and ready for the next
         // byte
         if(man_TXbitcnt > 7){
-            man_TXbusy = 0;
-            man_TXbitcnt = 0;
+            man_TXbusy = 0;     // we are done with transmission
+            man_TXbitcnt = 0;   // reset the bit counter
         }
     }
 }
