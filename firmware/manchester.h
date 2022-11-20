@@ -19,7 +19,10 @@
         #define IRMSK       TIMSK0
     #endif
 
+/// Pin for sending the Manchester Codes
 #define MAN_TX_PIN      B,1
+/// Pin for Receiving the Manchester Codes
+#define MAN_RX_PIN      B,2
 
 volatile unsigned char man_TXbusy;        ///< are we still busy sending a byte
 volatile char man_TXbyte;                 ///< byte, which should be transmitted
