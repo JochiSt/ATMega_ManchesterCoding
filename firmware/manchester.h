@@ -12,10 +12,11 @@
 #define MANCHESTER_H
 
     #if defined (__AVR_ATmega328__) || defined (__AVR_ATmega328P__) || defined (__AVR_ATmega88__) || defined (__AVR_ATmega48__)
-        #define TCCRA TCCR0A
-        #define TCCRB TCCR0B
-        #define OCRA  OCR0A
-        #define IRMSK TIMSK1
+        #define TIMER_vect  TIMER0_COMPA_vect
+        #define TCCRA       TCCR0A
+        #define TCCRB       TCCR0B
+        #define OCRA        OCR0A
+        #define IRMSK       TIMSK0
     #endif
 
 #define MAN_TX_PIN      B,1
