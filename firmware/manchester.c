@@ -69,7 +69,7 @@ void manchester_setOutputPin(unsigned char txbit, unsigned char phase) {
     }
 }
 
-ISR(TIMER0_COMPA_vect){
+ISR(TIMER_vect){
     // for the Manchester coding for each single bit in the TX character
     // two bits needs to be send out (1b2b encoding)
 
