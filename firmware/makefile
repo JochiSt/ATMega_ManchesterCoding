@@ -12,8 +12,9 @@ LDFLAGS  = -Wl,-gc-sections -Wl,-relax
 
 OBJECT_FILES = main.o usart.o manchester.o
 
-Release: $(TARGET).hex
+.PHONY: Release program fuses all size clean doc
 
+Release: all
 all: $(TARGET).hex
 
 clean:
