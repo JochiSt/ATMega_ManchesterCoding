@@ -9,6 +9,7 @@
 #include "manchester.h"
 
 #include <avr/interrupt.h>
+#include <util/delay.h>
 
 void setup(){
     usart_init(BAUDRATE);
@@ -25,5 +26,6 @@ int main(){
 	while(1){
         usart_write("test\r\n");
         manchester_write_char('U');
+    	_delay_ms(1000);
 	}
 }
