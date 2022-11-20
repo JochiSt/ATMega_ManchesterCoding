@@ -14,6 +14,9 @@ void manchester_init(unsigned long datarate){
     SET_OUTPUT(MAN_TX_PIN);
     RESET(MAN_TX_PIN);      // switch pin OFF
 
+    // initialise the input pin
+    SET_INPUT(MAN_RX_PIN);
+
     // configure the timer
     TCCRA =  (1 << WGM01); // CTC mode
     TCCRB |= (1 << CS01);  // prescaler (here 8)
