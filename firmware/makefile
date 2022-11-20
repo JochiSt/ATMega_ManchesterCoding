@@ -10,7 +10,7 @@ INCLUDES = -I./ -I/usr/lib/avr/include
 CFLAGS   = -std=c99 -g -Wall -mmcu=$(MCU) -DF_CPU=$(F_CPU) $(INCLUDES) -Os
 LDFLAGS  = -Wl,-gc-sections -Wl,-relax
 
-OBJECT_FILES = main.o usart.o
+OBJECT_FILES = main.o usart.o manchester.o
 
 Release: $(TARGET).hex
 

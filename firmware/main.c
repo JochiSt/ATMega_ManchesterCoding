@@ -6,6 +6,9 @@
 
 #include "usart.h"
 #include "config.h"
+#include "manchester.h"
+
+#include <avr/interrupt.h>
 
 void setup(){
     usart_init(BAUDRATE);
