@@ -24,6 +24,6 @@ int main(){
 	// Main program loop
 	while(1){
         usart_write("test\r\n");
-
+        manchester_write_char('U');
 	}
 }
