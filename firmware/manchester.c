@@ -21,9 +21,13 @@ void manchester_init(unsigned long datarate){
     TCCRA =  (1 << WGM01); // CTC mode
     TCCRB |= (1 << CS01);  // prescaler (here 8)
     OCRA  = 125-1;         // set the overflow value
+    SET_OUTPUT(MAN_DBG_PIN_CLK);
+    SET(MAN_DBG_PIN_CLK);      // switch pin ON
 
     // enable timer interrupt
     IRMSK |= (1<<OCIE0A);
+    SET_OUTPUT(MAN_DBG_PIN_TRG);
+    RESET(MAN_DBG_PIN_TRG);
 
     man_TXbitphase = 0;
     man_TXbitcnt = 0;
@@ -40,6 +44,7 @@ void manchester_write_char(char c){
     }
     man_TXbyte = c;        // put the new byte into the TX chain
     man_TXbusy = 1;        // indicate that we want to transmit a new byte
+    SET(MAN_DBG_PIN_TRG);
 }
 
 /**
@@ -73,6 +78,8 @@ ISR(TIMER_vect){
     // for the Manchester coding for each single bit in the TX character
     // two bits needs to be send out (1b2b encoding)
 
+    TOGGLE(MAN_DBG_PIN_CLK);
+
     // first half of the TX bit
     if(!man_TXbitphase) {
         man_TXbitphase = 1;
@@ -99,6 +106,7 @@ ISR(TIMER_vect){
         if(man_TXbitcnt > 7){
             man_TXbusy = 0;     // we are done with transmission
             man_TXbitcnt = 0;   // reset the bit counter
+            RESET(MAN_DBG_PIN_TRG);
         }
     }
 }

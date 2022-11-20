@@ -24,6 +24,9 @@
 /// Pin for Receiving the Manchester Codes
 #define MAN_RX_PIN      B,2
 
+#define MAN_DBG_PIN_CLK B,0
+#define MAN_DBG_PIN_TRG D,7
+
 volatile unsigned char man_TXbusy;        ///< are we still busy sending a byte
 volatile char man_TXbyte;                 ///< byte, which should be transmitted
 volatile char man_TXbit;                  ///< bit, which is currently being send
