@@ -50,5 +50,10 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+# EmBitz files
 *.ebp
 *.eds
+
+# Spyder Project
+.spyproject
