@@ -100,7 +100,7 @@ def analyse_pulse_width(vcd_files):
         # get the histogram range as a number
         delta_hist_range = hist_range[1]-hist_range[0]
         # calculate the number of bins needed to cover the range
-        hist_bins = int( np.round( delta_hist_range*1e-6 / (1. / F_sample) / 4, 0))
+        hist_bins = int( np.round( delta_hist_range*1e-6 / (1. / F_sample), 0))
         # calculate the bin width
         bin_width = delta_hist_range / hist_bins * 1000
 
