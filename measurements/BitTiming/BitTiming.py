@@ -131,7 +131,7 @@ def analyse_pulse_width(vcd_files):
     plt.ylabel("entries")
     plt.xlabel("pulse width / us")
     plt.legend()
-    plt.savefig("ANNexecutionTime.png")
+    plt.savefig("ManchesterPulseWidth.png")
     plt.tight_layout()
     plt.show()
 
