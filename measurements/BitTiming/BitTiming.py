@@ -125,6 +125,9 @@ def analyse_pulse_width(vcd_files):
         #x = np.linspace(binx.min(), binx.max(), 100)
         #plt.plot(x, stats.norm.pdf(x, mean_duration, std_duration) * np.max(biny) )
 
+        if names[key] == "Clock":
+            plt.axvline(mean_duration  , color="black", linestyle='--', linewidth=0.7)
+            plt.axvline(2*mean_duration, color="black", linestyle='--', linewidth=0.7)
 
 
     ax.set_yscale('log', nonposy='clip')
