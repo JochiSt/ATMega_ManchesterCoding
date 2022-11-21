@@ -91,7 +91,12 @@ def analyse_pulse_width(vcd_files):
         std_duration = np.std(a_duration)
 
         # define the histogram range (exclude the outliers)
-        hist_range = [mean_duration-5*std_duration, mean_duration+5*std_duration]
+        hist_range = [
+                # minimal side (duration cannot be lower than 0)
+                max(mean_duration-5*std_duration, 0),
+                # maximal side
+                mean_duration+5*std_duration
+                ]
         # get the histogram range as a number
         delta_hist_range = hist_range[1]-hist_range[0]
         # calculate the number of bins needed to cover the range
