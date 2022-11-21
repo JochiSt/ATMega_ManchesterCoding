@@ -25,7 +25,13 @@ int main(){
 	// Main program loop
 	while(1){
         //usart_write("test\r\n");
-        manchester_write_char('U');
-        _delay_us(500);
+        SET(MAN_DBG_PIN_TRG);
+        manchester_write_char(MAN_START_PATTERN);
+        //manchester_write_char('U');
+        //manchester_write_char('F');
+        RESET(MAN_DBG_PIN_TRG);
+
+        //_delay_us(500);
+        _delay_ms(5000);
 	}
 }

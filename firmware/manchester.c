@@ -107,7 +107,6 @@ ISR(TIMER2_COMPA_vect){
         if(man_TXbitcnt > 7){
             man_TXbusy = 0;     // we are done with transmission
             man_TXbitcnt = 0;   // reset the bit counter
-            RESET(MAN_DBG_PIN_TRG);
         }
     }
 }
