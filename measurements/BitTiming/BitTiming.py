@@ -5,6 +5,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+#plt.rcParams['text.usetex'] = True
+
 import scipy.stats as stats
 
 def VCD_pulseWidth(vcd_filename):
@@ -111,13 +113,13 @@ def analyse_pulse_width(vcd_files):
         biny, binx, _ = plt.hist(a_duration, bins=hist_bins,
                                  range=hist_range,
                                  label="$\mathbf{%s}$"%(names[key])
-                                         +"$\quadN = %d$"%(len(a_duration))
+                                         +"$\quad N = %d$"%(len(a_duration))
                                          +"\n"
                                          +"$\Delta T =%6.2f \pm %6.2f \, \mu \mathrm{s}$"%(mean_duration, std_duration)
                                          +"\n"
                                          +"$f =%6.2f \pm %6.2f \, \mathrm{kHz}$"%( mean_freq/1000, std_freq/1000)
                                          +"\n"
-                                         +"$\Delta_\mathrm{bin} =%4.2f \, \mathrm{ns}$"%(bin_width)
+                                         +"$\Delta T_\mathrm{bin} =%4.2f \, \mathrm{ns}$"%(bin_width)
                                          )
 
         #x = np.linspace(binx.min(), binx.max(), 100)
@@ -129,7 +131,7 @@ def analyse_pulse_width(vcd_files):
 
     plt.title("pulse width distribution")
     plt.ylabel("entries")
-    plt.xlabel("pulse width / us")
+    plt.xlabel(r'pulse width / \textmu s')
     plt.legend()
     plt.savefig("ManchesterPulseWidth.png")
     plt.tight_layout()
