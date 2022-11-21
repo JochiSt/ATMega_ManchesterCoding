@@ -7,12 +7,18 @@
 #include "usart.h"
 #include "config.h"
 #include "manchester.h"
+#include "io_manipulation.h"
 
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
 void setup(){
     usart_init(BAUDRATE);
+    usart_write("Compiliert at "__DATE__" - "__TIME__"\r\n");
+	usart_write("Compiliert with GCC Version "__VERSION__"\r\n");
+
+    _delay_ms(500);
+
     manchester_init();
 
     // enable global interrupts
