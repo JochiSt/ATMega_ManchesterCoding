@@ -78,7 +78,7 @@ def analyse_pulse_width(vcd_files):
         names, duration, F_sample = VCD_pulseWidth(vcd_filename)
         break   # just analyse a single file at the moment
 
-    fig, ax = plt.subplots()
+    fig, ax = plt.subplots(1, 1, figsize=(8, 5))
 
     for key in names.keys():
         # exclude trigger, because the time duration might be not that
