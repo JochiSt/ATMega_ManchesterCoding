@@ -13,6 +13,12 @@
 #include <util/delay.h>
 
 void setup(){
+    SET_OUTPUT(LED);
+    SET(LED);
+
+    SET_OUTPUT(MAN_DBG_PIN_TRG);
+    RESET(MAN_DBG_PIN_TRG);
+
     usart_init(BAUDRATE);
     usart_write("Compiliert at "__DATE__" - "__TIME__"\r\n");
 	usart_write("Compiliert with GCC Version "__VERSION__"\r\n");
@@ -27,6 +33,14 @@ void setup(){
 
 int main(){
 	setup();
+    _delay_ms(50);  // wait some time for getting everything setup
+
+    // wait until we are synced
+    while(!man_RX_synced){
+        _delay_us(500);
+    }
+    // turn off the LED once we are synced
+    RESET(LED);
 
 	// Main program loop
 	while(1){
