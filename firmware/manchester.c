@@ -10,23 +10,24 @@
  */
 void manchester_init(unsigned long datarate){
 
-    // initialise the output pin
+    // initialize the output pin
     SET_OUTPUT(MAN_TX_PIN);
     RESET(MAN_TX_PIN);      // switch pin OFF
 
-    // initialise the input pin
+    // initialize the input pin
     SET_INPUT(MAN_RX_PIN);
 
+    // debug outputs
     SET_OUTPUT(MAN_DBG_PIN_CLK);
     SET(MAN_DBG_PIN_CLK);      // switch pin ON
 
     SET_OUTPUT(MAN_DBG_PIN_TRG);
     RESET(MAN_DBG_PIN_TRG);
 
-  TCCR2A = (1<<WGM21); // Wave Form Generation Mode 2: CTC, OC2A disconnected
-  TCCR2B = (1<<CS21) ; // prescaler
-  TIMSK2 = (1<<OCIE2A); // interrupt when Compare Match with OCR2A
-  OCR2A = 64;
+    TCCR2A = (1<<WGM21);  // Wave Form Generation Mode 2: CTC, OC2A disconnected
+    TCCR2B = (1<<CS21) ;  // prescaler
+    TIMSK2 = (1<<OCIE2A); // interrupt when Compare Match with OCR2A
+    OCR2A = 64;
 
     man_TXbitphase = 0;
     man_TXbitcnt = 0;
