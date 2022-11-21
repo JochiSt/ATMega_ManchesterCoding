@@ -24,10 +24,8 @@ int main(){
 
 	// Main program loop
 	while(1){
-        usart_write("test\r\n");
+        //usart_write("test\r\n");
         manchester_write_char('U');
-        manchester_write_char('z');
-        manchester_write_char('F');
-    	_delay_ms(1000);
+        _delay_us(500);
 	}
 }
