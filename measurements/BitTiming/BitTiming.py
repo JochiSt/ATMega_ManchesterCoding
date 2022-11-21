@@ -126,7 +126,6 @@ def analyse_pulse_width(vcd_files):
 
 
     ax.set_yscale('log', nonposy='clip')
-    #ax.set_xlim([0,80])
 
     plt.title("pulse width distribution")
     plt.ylabel("entries")
