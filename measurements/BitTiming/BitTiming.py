@@ -104,24 +104,26 @@ def analyse_pulse_width(vcd_files):
         # calculate the bin width
         bin_width = delta_hist_range / hist_bins * 1000
 
-        print(hist_bins, bin_width)
+        mean_freq = 1/(mean_duration*1e-6)
+        std_freq  = 1/(mean_duration*1e-6)**2 * std_duration*1e-6
 
         # histogram the data
         biny, binx, _ = plt.hist(a_duration, bins=hist_bins,
-                                 range=hist_range, label=names[key] )
+                                 range=hist_range,
+                                 label="$\mathbf{%s}$"%(names[key])
+                                         +"$\quadN = %d$"%(len(a_duration))
+                                         +"\n"
+                                         +"$\Delta T =%6.2f \pm %6.2f \, \mu \mathrm{s}$"%(mean_duration, std_duration)
+                                         +"\n"
+                                         +"$f =%6.2f \pm %6.2f \, \mathrm{kHz}$"%( mean_freq/1000, std_freq/1000)
+                                         +"\n"
+                                         +"$\Delta_\mathrm{bin} =%4.2f \, \mathrm{ns}$"%(bin_width)
+                                         )
 
         #x = np.linspace(binx.min(), binx.max(), 100)
         #plt.plot(x, stats.norm.pdf(x, mean_duration, std_duration) * np.max(biny) )
 
-        #plt.text( 0.05, 0.90,  r'N = %d'%(len(a_duration)), ha='left', va='center', transform=ax.transAxes )
-        #plt.text( 0.05, 0.84,  r'$\Delta T =%6.2f \pm %6.2f \, \mu \mathrm{s}$'%(mean_duration, std_duration), ha='left', va='center', transform=ax.transAxes )
 
-        #plt.text( 0.95, 0.90,  r'$\Delta_\mathrm{bin} =%4.2f \, \mathrm{ns}$'%(bin_width), ha='right', va='center', transform=ax.transAxes )
-
-        mean_freq = 1/(mean_duration*1e-6)
-        std_freq  = 1/(mean_duration*1e-6)**2 * std_duration*1e-6
-
-        #plt.text( 0.05, 0.78,  r'$f =%6.2f \pm %6.2f \, \mathrm{Hz}$'%(mean_freq, std_freq), ha='left', va='center', transform=ax.transAxes )
 
     ax.set_yscale('log', nonposy='clip')
     #ax.set_xlim([0,80])
