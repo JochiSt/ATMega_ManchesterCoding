@@ -25,9 +25,10 @@ void manchester_init(unsigned long datarate){
     RESET(MAN_DBG_PIN_TRG);
 
     TCCR2A = (1<<WGM21);  // Wave Form Generation Mode 2: CTC, OC2A disconnected
-    TCCR2B = (1<<CS21) ;  // prescaler
+    TCCR2B = (1<<CS20) ;  // prescaler = 1
     TIMSK2 = (1<<OCIE2A); // interrupt when Compare Match with OCR2A
-    OCR2A = 64;
+    OCR2A = 160;
+    // this should result in something of about 100kHz
 
     man_TXbitphase = 0;
     man_TXbitcnt = 0;
