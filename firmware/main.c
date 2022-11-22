@@ -49,9 +49,11 @@ int main(void){
         manchester_TX_str("HELLO WORLD");
         RESET(MAN_DBG_PIN_TRG);
 
-        //usart_write_str(man_RX_buffer);
-        usart_write_str(man_RX_buffer);
-        usart_write_str("\n");
+        if(man_RX_ready){
+            man_RX_ready = 0;
+            usart_write_str(man_RX_buffer);
+            usart_write_str("\n");
+        }
 
         _delay_us(500);
 	}
