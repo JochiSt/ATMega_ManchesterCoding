@@ -62,6 +62,14 @@ void manchester_write_char(char c){
     // block until done
     while(man_TXbusy){
     }
+/**
+ * write a string via Manchester Coding
+ * @param str string, which should be sent
+ */
+void manchester_write_str(char *str){
+	while (*str){
+		manchester_write_char(*str++);
+	}
 }
 
 /**
