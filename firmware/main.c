@@ -58,6 +58,13 @@ int main(void){
         manchester_write_char(0xFF);
         manchester_write_char(0x00);
         */
+        manchester_write_char('H');
+        manchester_write_char('E');
+        manchester_write_char('L');
+        manchester_write_char('L');
+        manchester_write_char('O');
+        _delay_ms(50);
+
         RESET(MAN_DBG_PIN_TRG);
 
         //_delay_us(500);
