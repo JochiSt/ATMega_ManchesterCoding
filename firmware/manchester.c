@@ -132,14 +132,9 @@ ISR(TIMER2_COMPA_vect){
             man_RX_sync_cnt = 0;
 
             man_RX_bitbuffer |= (1 << 7);
-
-            SET(MAN_DBG_PIN_RX);
-
         // RX bit = 0 (10)
         } else if(man_RX_bit0 && !man_RX_bit1) {
             man_RX_bitbuffer |= (0 << 7);
-            RESET(MAN_DBG_PIN_RX);
-
             man_RX_sync_cnt++;
         }
 
@@ -147,13 +142,6 @@ ISR(TIMER2_COMPA_vect){
         // evaluate the synchronization counter
         if(man_RX_sync_cnt > 10){
             man_RX_synced = 1;
-        }
-
-        // set the debug pin
-        if(man_RX_synced){
-            SET(MAN_DBG_PIN_SYNC);
-        }else{
-            RESET(MAN_DBG_PIN_SYNC);
         }
 
         ////////////////////////////////////////////////////////////////////////
@@ -173,10 +161,6 @@ ISR(TIMER2_COMPA_vect){
         if (man_RX_bitbuffer == MAN_START_PATTERN){
             man_RXbitcnt = 0;
             man_RX_buffercounter = 0;
-
-            SET(MAN_DBG_PIN_HEAD);
-        }else{
-            RESET(MAN_DBG_PIN_HEAD);
         }
 
     // second half of the RX bit
