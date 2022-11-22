@@ -112,30 +112,38 @@ ISR(TIMER2_COMPA_vect){
         man_RXbitphase = 1;
         man_RX_bit0 = IS_SET(MAN_RX_PIN);
         // evaluate the received pattern
-        // 1
+
+        // a new bit has being received
+        man_RX_buffer = (man_RX_buffer >> 1);
+        man_RX_sync_cnt ++;
+
+        // RX bit = 1 (01)
         if(!man_RX_bit0 && man_RX_bit1) {
+            // if we have received a one, it's no longer part of the sync
+            // sequence -> the sync counter is reset
             man_RX_sync_cnt = 0;
 
-
-            man_RX_buffer = (man_RX_buffer >> 1);
-            man_RX_buffer|= (1) << 7;
-            man_RXbitcnt++;
+            man_RX_buffer |= (1 << 7);
 
             SET(MAN_DBG_PIN_RX);
 
-        // 0
+        // RX bit = 0 (10)
         } else if(man_RX_bit0 && !man_RX_bit1) {
-            man_RX_sync_cnt ++;
-
-            man_RX_buffer = (man_RX_buffer >> 1);
-            man_RX_buffer|= (0) << 7;
-            man_RXbitcnt++;
-
+            man_RX_buffer |= (0 << 7);
             RESET(MAN_DBG_PIN_RX);
+
+            man_RX_sync_cnt++;
         }
 
-        // force FAKE sync
-        man_RX_synced = 1;
+        // evaluate the synchronization counter
+        if(man_RX_sync_cnt > 10){
+            man_RX_synced = 1;
+        }
+        if(man_RX_synced){
+            SET(MAN_DBG_PIN_SYNC);
+        }else{
+            RESET(MAN_DBG_PIN_SYNC);
+        }
 
         // limit RX bit counter to 0-7
         if( man_RXbitcnt > 7) {
