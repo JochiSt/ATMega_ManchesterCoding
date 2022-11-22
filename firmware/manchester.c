@@ -62,6 +62,14 @@ void manchester_write_char(char c){
 }
 
 /**
+ * reset the synchronization and by this force resynchronization
+ */
+void manchester_resetSynchronization(void){
+    man_RX_sync_cnt = 0;
+    man_RX_synced = 0;
+}
+
+/**
  * set the pin output. In this function the 0 and 1 of the txbit are translated
  * to 01 and 10 at the output.
  * @param txbit value of the bit to be transmitted (0/1)
