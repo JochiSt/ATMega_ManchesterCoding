@@ -12,6 +12,8 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+#define MAN_DBG_PIN_TRG  D,7
+
 void setup(void){
     SET_OUTPUT(LED);
     SET(LED);
