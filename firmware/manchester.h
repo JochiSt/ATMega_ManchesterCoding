@@ -36,7 +36,7 @@
  */
 /// Number of required sync '0's before any bit can start
 #define REQ_SYNC_CNT        10
-// TEST pattern 0000
+// the start pattern must be 8 bit, because the write char function is used
 #define MAN_START_PATTERN   0b01010000
 #define HEADER              0b1010
 #define HEADER_LEN          4
