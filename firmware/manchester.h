@@ -54,8 +54,8 @@ volatile unsigned char man_RX_bit1;
  * @{
  */
 volatile unsigned char man_TXbusy;        ///< are we still busy sending a byte
-volatile char man_TXbyte;                 ///< byte, which should be transmitted
-volatile char man_TXbit;                  ///< bit, which is currently being send
+char man_TXbyte;                          ///< byte, which should be transmitted
+volatile char man_TXbit;                  ///< bit, which is currently being sent
 volatile unsigned char man_TXbitphase;    ///< indicating the TX bit phase
 volatile unsigned char man_TXbitcnt;      ///< counter for counting the TX bits
 /** @} */
