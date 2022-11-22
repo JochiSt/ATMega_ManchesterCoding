@@ -91,6 +91,67 @@ ISR(TIMER2_COMPA_vect){
 
     TOGGLE(MAN_DBG_PIN_CLK);
 
+    // first half of the RX bit
+    if(!man_RXbitphase){
+        man_RXbitphase = 1;
+        man_RX_bit0 = IS_SET(MAN_RX_PIN);
+        // evaluate the received pattern
+        // 1
+        if(!man_RX_bit0 && man_RX_bit1) {
+            man_RX_sync_cnt = 0;
+
+
+            man_RX_buffer = (man_RX_buffer >> 1);
+            man_RX_buffer|= (1) << 7;
+            man_RXbitcnt++;
+
+            SET(MAN_DBG_PIN_RX);
+
+        // 0
+        } else if(man_RX_bit0 && !man_RX_bit1) {
+            man_RX_sync_cnt ++;
+
+            man_RX_buffer = (man_RX_buffer >> 1);
+            man_RX_buffer|= (0) << 7;
+            man_RXbitcnt++;
+
+            RESET(MAN_DBG_PIN_RX);
+        }
+
+        // force FAKE sync
+        man_RX_synced = 1;
+
+        // limit RX bit counter to 0-7
+        if( man_RXbitcnt > 7) {
+            man_RXbitcnt = 0;
+        }
+/*
+        // do we have detected the start pattern
+        if (man_RX_buffer == MAN_START_PATTERN){
+            SET(MAN_DBG_PIN_RX);
+        }else{
+            RESET(MAN_DBG_PIN_RX);
+        }
+*/
+        /*
+        if (man_RX_synced){
+            // adjust our bit counter to match the start pattern
+            if (man_RX_buffer == MAN_START_PATTERN){
+                man_RXbitcnt = 8;
+            }
+            if( man_RXbitcnt > 8){
+                usart_write_char(man_RX_buffer);
+                man_RXbitcnt = 0;
+            }
+        }
+        */
+    // second half of the RX bit
+    }else{
+        man_RXbitphase = 0;
+        man_RX_bit1 = IS_SET(MAN_RX_PIN);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////
     // first half of the TX bit
     if(!man_TXbitphase) {
         man_TXbitphase = 1;
