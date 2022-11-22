@@ -30,6 +30,16 @@ void manchester_init(unsigned long datarate){
     OCR2A = 160;
     // this should result in something of about 100kHz
 
+    // initialize the RX variables
+    man_RXbitcnt = 0;
+    man_RXbitphase = 0;
+    man_RX_synced = 0;
+    man_RX_sync_cnt = 0;
+    man_RX_bit0 = 0;
+    man_RX_bit1 = 0;
+    man_RX_buffer = 0;
+
+    // initialize the TX variables
     man_TXbitphase = 0;
     man_TXbitcnt = 0;
     man_TXbyte = 0;
