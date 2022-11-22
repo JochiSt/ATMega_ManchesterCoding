@@ -25,7 +25,7 @@ void setup(void){
 
     _delay_ms(500);
 
-    manchester_init();
+    manchester_init(0);
 
     // enable global interrupts
     sei();

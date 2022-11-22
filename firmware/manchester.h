@@ -61,7 +61,7 @@ volatile unsigned char man_TXbitphase;    ///< indicating the TX bit phase
 volatile unsigned char man_TXbitcnt;      ///< counter for counting the TX bits
 /** @} */
 
-void manchester_init();
+void manchester_init(unsigned long datarate);
 void manchester_write_char(char c);
 void manchester_write_str(char *str);
 
