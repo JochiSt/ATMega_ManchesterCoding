@@ -46,6 +46,10 @@ volatile unsigned char man_RX_synced;     ///< are we synced
 
 volatile unsigned char man_RX_bitbuffer;
 
+#define MAN_RX_BUFFER_SIZE 10
+char man_RX_buffer[MAN_RX_BUFFER_SIZE];
+volatile unsigned char man_RX_buffercounter;
+
 volatile unsigned char man_RXbitphase;
 volatile unsigned char man_RXbitcnt;
 
