@@ -42,7 +42,8 @@ void manchester_init(unsigned long datarate){
     man_RX_sync_cnt = 0;
     man_RX_bit0 = 0;
     man_RX_bit1 = 0;
-    man_RX_buffer = 0;
+    man_RX_bitbuffer = 0;
+    man_RX_buffercounter = 0;
 
     // initialize the TX variables
     man_TXbitphase = 0;
@@ -148,12 +149,19 @@ ISR(TIMER2_COMPA_vect){
         // limit RX bit counter to 0-7
         if( man_RXbitcnt > 7) {
             man_RXbitcnt = 0;
+
+            // we have received a byte / char
+            if (man_RX_buffercounter < MAN_RX_BUFFER_SIZE - 1){
+                man_RX_buffer[man_RX_buffercounter++] = man_RX_bitbuffer;
+            }
         }
 
         // do we have detected the start pattern
         // if so, we reset the bit counter to be in phase with the received data
         if (man_RX_bitbuffer == MAN_START_PATTERN){
             man_RXbitcnt = 0;
+            man_RX_buffercounter = 0;
+
             SET(MAN_DBG_PIN_HEAD);
         }else{
             RESET(MAN_DBG_PIN_HEAD);
