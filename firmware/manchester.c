@@ -20,9 +20,14 @@ void manchester_init(unsigned long datarate){
     // debug outputs
     SET_OUTPUT(MAN_DBG_PIN_CLK);
     SET(MAN_DBG_PIN_CLK);      // switch pin ON
+    SET_OUTPUT(MAN_DBG_PIN_RX);
+    RESET(MAN_DBG_PIN_RX);
 
-    SET_OUTPUT(MAN_DBG_PIN_TRG);
-    RESET(MAN_DBG_PIN_TRG);
+    SET_OUTPUT(MAN_DBG_PIN_SYNC);
+    RESET(MAN_DBG_PIN_SYNC);
+
+    SET_OUTPUT(MAN_DBG_PIN_HEAD);
+    RESET(MAN_DBG_PIN_HEAD);
 
     TCCR2A = (1<<WGM21);  // Wave Form Generation Mode 2: CTC, OC2A disconnected
     TCCR2B = (1<<CS20) ;  // prescaler = 1
