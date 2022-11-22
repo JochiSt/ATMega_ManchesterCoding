@@ -66,7 +66,7 @@ void manchester_write_char(char c){
  *
  */
 void manchester_setOutputPin(unsigned char txbit, unsigned char phase) {
-    if(txbit) { // txbit = 0
+    if(txbit) { // txbit = 1
         if(phase){
             // output 1
             SET(MAN_TX_PIN);
@@ -166,7 +166,6 @@ ISR(TIMER2_COMPA_vect){
         }
         // set the proper output
         manchester_setOutputPin(man_TXbit, man_TXbitphase);
-
     // second half of the TX bit
     }else{
         man_TXbitphase = 0;
