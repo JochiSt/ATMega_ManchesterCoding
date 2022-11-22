@@ -9,7 +9,7 @@ OBJCOPY = avr-objcopy
 INCLUDES = -I./ -I/usr/lib/avr/include
 
 CFLAGS   += -std=c99
-CFLAGS   += -Wall
+CFLAGS   += -Wall -Wextra
 CFLAGS   += -mmcu=$(MCU) -DF_CPU=$(F_CPU)
 CFLAGS   += -Os
 CFLAGS   += -Wold-style-definition
