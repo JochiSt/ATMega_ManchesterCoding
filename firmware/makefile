@@ -41,7 +41,7 @@ fuses:
 ###############################################################################
 
 %.hex: %.obj
-	avr-size -C --mcu=$(MCU) $(TARGET).obj
+	avr-size -C --mcu=$(MCU) $<
 	$(OBJCOPY) -R .eeprom -O ihex $< $@
 
 %.obj: $(OBJECT_FILES)
