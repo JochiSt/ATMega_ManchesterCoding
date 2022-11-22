@@ -52,12 +52,12 @@ int main(void){
         //usart_write("test\r\n");
         SET(MAN_DBG_PIN_TRG);
         manchester_write_char(MAN_START_PATTERN);
+        /*
         manchester_write_char(0b00110011);
         manchester_write_char(0x00);
         manchester_write_char(0xFF);
         manchester_write_char(0x00);
-        manchester_write_char(0b10101010);
-        //manchester_write_char('F');
+        */
         RESET(MAN_DBG_PIN_TRG);
 
         //_delay_us(500);
