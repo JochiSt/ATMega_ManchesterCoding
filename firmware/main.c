@@ -12,7 +12,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
-void setup(){
+void setup(void){
     SET_OUTPUT(LED);
     SET(LED);
 
@@ -31,7 +31,7 @@ void setup(){
     sei();
 }
 
-int main(){
+int main(void){
 	setup();
     _delay_ms(50);  // wait some time for getting everything setup
 
