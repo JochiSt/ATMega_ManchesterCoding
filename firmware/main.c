@@ -63,9 +63,6 @@ int main(void){
         //usart_write_str(man_RX_buffer);
         usart_write_str(man_RX_buffer);
         usart_write_str("\n");
-        usart_write_char(man_RXbitcnt);
-        usart_write_char(man_RX_buffercounter);
-        usart_write_str("\n");
 
         //_delay_us(500);
         _delay_ms(5000);
