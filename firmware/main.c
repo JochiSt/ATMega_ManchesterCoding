@@ -46,18 +46,7 @@ int main(void){
 	// Main program loop
 	while(1){
         SET(MAN_DBG_PIN_TRG);
-        manchester_write_char(MAN_START_PATTERN);
-        manchester_write_char('H'); //  0
-        manchester_write_char('E'); //  1
-        manchester_write_char('L'); //  2
-        manchester_write_char('L'); //  3
-        manchester_write_char('O'); //  4
-        manchester_write_char(' '); //  5
-        manchester_write_char('W'); //  6
-        manchester_write_char('O'); //  7
-        manchester_write_char('R'); //  8
-        manchester_write_char('L'); //  9
-        manchester_write_char('D'); // 10
+        manchester_TX_str("HELLO WORLD");
         RESET(MAN_DBG_PIN_TRG);
 
         //usart_write_str(man_RX_buffer);
