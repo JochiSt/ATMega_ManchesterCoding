@@ -28,6 +28,28 @@
 #define MAN_DBG_PIN_TRG D,7
 
 /**
+ * @addtogroup RXvars Variables needed for receiving
+ * @{
+ */
+/// Number of required sync '0's before any bit can start
+#define REQ_SYNC_CNT        10
+// TEST pattern 0000
+#define MAN_START_PATTERN   0b01010000
+#define HEADER              0b1010
+#define HEADER_LEN          4
+
+volatile unsigned char man_RX_sync_cnt;   ///< counter of the sync bits
+volatile unsigned char man_RX_synced;     ///< are we synced
+
+volatile char man_RX_buffer;
+
+volatile unsigned char man_RXbitphase;
+volatile unsigned char man_RXbitcnt;
+
+volatile unsigned char man_RX_bit0;
+volatile unsigned char man_RX_bit1;
+/** @} */
+/**
  * @addtogroup TXvars Variables needed for transmission
  * @{
  */
