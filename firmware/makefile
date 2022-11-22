@@ -7,7 +7,14 @@ CC      = avr-gcc
 OBJCOPY = avr-objcopy
 
 INCLUDES = -I./ -I/usr/lib/avr/include
-CFLAGS   = -std=c99 -g -Wall -mmcu=$(MCU) -DF_CPU=$(F_CPU) $(INCLUDES) -Os
+
+CFLAGS   += -std=c99
+CFLAGS   += -Wall
+CFLAGS   += -mmcu=$(MCU) -DF_CPU=$(F_CPU)
+CFLAGS   += -Os
+CFLAGS   += -Wold-style-definition
+CFLAGS   += $(INCLUDES)
+
 LDFLAGS  = -Wl,-gc-sections -Wl,-relax
 
 OBJECT_FILES = main.o usart.o manchester.o
