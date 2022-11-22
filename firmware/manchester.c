@@ -48,6 +48,7 @@ void manchester_init(unsigned long datarate){
 
 /**
  * write a single character via the Manchester encoding output
+ * @param c character to be written via the encoding
  */
 void manchester_write_char(char c){
     // wait until the last byte got sent out
