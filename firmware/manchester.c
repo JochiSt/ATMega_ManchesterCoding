@@ -55,7 +55,9 @@ void manchester_write_char(char c){
     }
     man_TXbyte = c;        // put the new byte into the TX chain
     man_TXbusy = 1;        // indicate that we want to transmit a new byte
-    SET(MAN_DBG_PIN_TRG);
+    // block until done
+    while(man_TXbusy){
+    }
 }
 
 /**
