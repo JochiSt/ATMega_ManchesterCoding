@@ -20,13 +20,17 @@ void manchester_init(unsigned long datarate){
     // initialize the input pin
     SET_INPUT(MAN_RX_PIN);
 
+    // init the debug clock output
+    SET_OUTPUT(MAN_DBG_PIN_CLK);
+    RESET(MAN_DBG_PIN_CLK);
+
+    // setting up the timer interrupt
     TCCR2A = (1<<WGM21);  // Wave Form Generation Mode 2: CTC, OC2A disconnected
     TCCR2B = (0<<CS21)|(1<<CS20);   // prescaler = 1
     //TCCR2B = (1<<CS21)|(0<<CS20);   // prescaler = 8
     //TCCR2B = (1<<CS21)|(1<<CS20);   // prescaler = 32
     TIMSK2 = (1<<OCIE2A); // interrupt when Compare Match with OCR2A
-    OCR2A = 160;
-    // this should result in something of about 100kHz
+    OCR2A = 160; // counting to 160 gives 100kHz
 
     // initialize the RX variables
     man_RXbitcnt = 0;

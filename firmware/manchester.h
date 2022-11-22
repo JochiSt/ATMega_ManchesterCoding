@@ -40,17 +40,17 @@
 volatile unsigned char man_RX_sync_cnt;   ///< counter of the sync bits
 volatile unsigned char man_RX_synced;     ///< are we synced
 
-volatile unsigned char man_RX_bitbuffer;
+volatile unsigned char man_RX_bitbuffer;  ///< buffering the single bits
 
-#define MAN_RX_BUFFER_SIZE 16
-char man_RX_buffer[MAN_RX_BUFFER_SIZE];
+#define MAN_RX_BUFFER_SIZE 16             ///< buffer size of the byte buffer
+char man_RX_buffer[MAN_RX_BUFFER_SIZE];   ///< RX byte buffer
 volatile unsigned char man_RX_buffercounter;
 
-volatile unsigned char man_RXbitphase;
-volatile unsigned char man_RXbitcnt;
+volatile unsigned char man_RXbitphase;    ///< the bit phase
+volatile unsigned char man_RXbitcnt;      ///< bit counter
 
-volatile unsigned char man_RX_bit0;
-volatile unsigned char man_RX_bit1;
+volatile unsigned char man_RX_bit0;       ///< RX bit of cycle 0
+volatile unsigned char man_RX_bit1;       ///< RX bit of cycle 1
 /** @} */
 /**
  * @addtogroup TXvars Variables needed for transmission
