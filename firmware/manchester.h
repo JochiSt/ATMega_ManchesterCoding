@@ -45,6 +45,7 @@ volatile unsigned char man_RX_bitbuffer;  ///< buffering the single bits
 #define MAN_RX_BUFFER_SIZE 16             ///< buffer size of the byte buffer
 char man_RX_buffer[MAN_RX_BUFFER_SIZE];   ///< RX byte buffer
 volatile unsigned char man_RX_buffercounter;
+volatile unsigned char man_RX_ready;
 
 volatile unsigned char man_RXbitphase;    ///< the bit phase
 volatile unsigned char man_RXbitcnt;      ///< bit counter

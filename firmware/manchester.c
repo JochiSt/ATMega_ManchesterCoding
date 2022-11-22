@@ -41,6 +41,7 @@ void manchester_init(unsigned long datarate){
     man_RX_bit1 = 0;
     man_RX_bitbuffer = 0;
     man_RX_buffercounter = 0;
+    man_RX_ready = 0;
 
     // initialize the TX variables
     man_TXbitphase = 0;
@@ -157,6 +158,9 @@ ISR(TIMER2_COMPA_vect){
             // we have received a byte / char
             if (man_RX_buffercounter < MAN_RX_BUFFER_SIZE - 1){
                 man_RX_buffer[man_RX_buffercounter++] = man_RX_bitbuffer;
+            }
+            if( man_RX_bitbuffer == MAN_STOP_PATTERN){
+                man_RX_ready = 1;
             }
         }
 
