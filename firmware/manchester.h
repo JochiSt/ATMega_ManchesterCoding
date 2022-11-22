@@ -34,8 +34,6 @@
 #define REQ_SYNC_CNT        10
 // the start pattern must be 8 bit, because the write char function is used
 #define MAN_START_PATTERN   0b01010000
-#define HEADER              0b1010
-#define HEADER_LEN          4
 
 volatile unsigned char man_RX_sync_cnt;   ///< counter of the sync bits
 volatile unsigned char man_RX_synced;     ///< are we synced
