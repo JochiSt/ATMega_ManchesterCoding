@@ -27,21 +27,26 @@
 #define MAN_DBG_PIN_CLK B,0
 #define MAN_DBG_PIN_TRG D,7
 
+/**
+ * @addtogroup TXvars Variables needed for transmission
+ * @{
+ */
 volatile unsigned char man_TXbusy;        ///< are we still busy sending a byte
 volatile char man_TXbyte;                 ///< byte, which should be transmitted
 volatile char man_TXbit;                  ///< bit, which is currently being send
 volatile unsigned char man_TXbitphase;    ///< indicating the TX bit phase
 volatile unsigned char man_TXbitcnt;      ///< counter for counting the TX bits
+/** @} */
 
 void manchester_init();
-
 void manchester_write_char(char c);
 void manchester_write_str(char *str);
 
 /**
- * internal functions
+ * @addtogroup IntFunc internal functions
+ * @{
  */
 void manchester_setOutputPin(unsigned char txbit, unsigned char phase);
-
+/** @} */
 
 #endif
