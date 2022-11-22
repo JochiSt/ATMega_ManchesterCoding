@@ -114,8 +114,8 @@ ISR(TIMER2_COMPA_vect){
         // evaluate the received pattern
 
         // a new bit has being received
-        man_RX_buffer = (man_RX_buffer >> 1);
-        man_RX_sync_cnt ++;
+        man_RX_bitbuffer = (man_RX_bitbuffer >> 1);
+        man_RXbitcnt ++;
 
         // RX bit = 1 (01)
         if(!man_RX_bit0 && man_RX_bit1) {
@@ -123,13 +123,13 @@ ISR(TIMER2_COMPA_vect){
             // sequence -> the sync counter is reset
             man_RX_sync_cnt = 0;
 
-            man_RX_buffer |= (1 << 7);
+            man_RX_bitbuffer |= (1 << 7);
 
             SET(MAN_DBG_PIN_RX);
 
         // RX bit = 0 (10)
         } else if(man_RX_bit0 && !man_RX_bit1) {
-            man_RX_buffer |= (0 << 7);
+            man_RX_bitbuffer |= (0 << 7);
             RESET(MAN_DBG_PIN_RX);
 
             man_RX_sync_cnt++;
@@ -152,7 +152,7 @@ ISR(TIMER2_COMPA_vect){
 
         // do we have detected the start pattern
         // if so, we reset the bit counter to be in phase with the received data
-        if (man_RX_buffer == MAN_START_PATTERN){
+        if (man_RX_bitbuffer == MAN_START_PATTERN){
             man_RXbitcnt = 0;
             SET(MAN_DBG_PIN_HEAD);
         }else{

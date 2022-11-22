@@ -44,7 +44,7 @@
 volatile unsigned char man_RX_sync_cnt;   ///< counter of the sync bits
 volatile unsigned char man_RX_synced;     ///< are we synced
 
-volatile unsigned char man_RX_buffer;
+volatile unsigned char man_RX_bitbuffer;
 
 volatile unsigned char man_RXbitphase;
 volatile unsigned char man_RXbitcnt;
