@@ -41,15 +41,10 @@ int main(void){
     }
     // turn off the LED once we are synced
     RESET(LED);
+    usart_write("Manchester Synced\n");
 
 	// Main program loop
 	while(1){
-        manchester_resetSynchronization();
-        while(!man_RX_synced){
-            _delay_us(5);
-        }
-        _delay_ms(100);
-        //usart_write("test\r\n");
         SET(MAN_DBG_PIN_TRG);
         manchester_write_char(MAN_START_PATTERN);
         /*
