@@ -185,6 +185,7 @@ ISR(TIMER2_COMPA_vect){
             }
             if( man_RX_bitbuffer == MAN_STOP_PATTERN){
                 man_RX_ready = 1;
+                man_RX_buffer[man_RX_buffercounter-1] = 0x0;
             }
         }
 
