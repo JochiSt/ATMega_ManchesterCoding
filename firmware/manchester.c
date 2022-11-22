@@ -24,13 +24,37 @@ void manchester_init(unsigned long datarate){
     SET_OUTPUT(MAN_DBG_PIN_CLK);
     RESET(MAN_DBG_PIN_CLK);
 
+    uint8_t prescaler_cnt = 0;
+    uint8_t prescalers[7] = {1, 8, 32, 64, 128, 256, 1024};
+
+    uint32_t f_cpu = F_CPU;
+
+    while( f_cpu / datarate > 250){
+        prescaler_cnt++;
+        f_cpu = F_CPU / prescalers[prescaler_cnt];
+    }
+
     // setting up the timer interrupt
     TCCR2A = (1<<WGM21);  // Wave Form Generation Mode 2: CTC, OC2A disconnected
-    TCCR2B = (0<<CS21)|(1<<CS20);   // prescaler = 1
-    //TCCR2B = (1<<CS21)|(0<<CS20);   // prescaler = 8
-    //TCCR2B = (1<<CS21)|(1<<CS20);   // prescaler = 32
+    if(prescalers[prescaler_cnt] == 1){
+        TCCR2B = (0<<CS22)|(0<<CS21)|(1<<CS20);
+    }else if(prescalers[prescaler_cnt] == 8){
+        TCCR2B = (0<<CS22)|(1<<CS21)|(0<<CS20);
+    }else if(prescalers[prescaler_cnt] == 32){
+        TCCR2B = (0<<CS22)|(1<<CS21)|(1<<CS20);
+    }else if(prescalers[prescaler_cnt] == 64){
+        TCCR2B = (1<<CS22)|(0<<CS21)|(0<<CS20);
+    }else if(prescalers[prescaler_cnt] == 128){
+        TCCR2B = (1<<CS22)|(1<<CS21)|(1<<CS20);
+    }else if(prescalers[prescaler_cnt] == 256){
+        TCCR2B = (1<<CS22)|(1<<CS21)|(0<<CS20);
+    }else if(prescalers[prescaler_cnt] == 1024){
+        TCCR2B = (1<<CS22)|(1<<CS21)|(1<<CS20);
+    }
+    OCR2A = f_cpu/datarate;
+
     TIMSK2 = (1<<OCIE2A); // interrupt when Compare Match with OCR2A
-    OCR2A = 160; // counting to 160 gives 100kHz
+
 
     // initialize the RX variables
     man_RXbitcnt = 0;
