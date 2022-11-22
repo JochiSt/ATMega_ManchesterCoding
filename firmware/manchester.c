@@ -108,12 +108,15 @@ ISR(TIMER2_COMPA_vect){
 
     TOGGLE(MAN_DBG_PIN_CLK);
 
+/******************************************************************************/
     // first half of the RX bit
     if(!man_RXbitphase){
         man_RXbitphase = 1;
         man_RX_bit0 = IS_SET(MAN_RX_PIN);
         // evaluate the received pattern
 
+        ////////////////////////////////////////////////////////////////////////
+        // evaluate the received pattern
         // a new bit has being received
         man_RX_bitbuffer = (man_RX_bitbuffer >> 1);
         man_RXbitcnt ++;
@@ -140,12 +143,15 @@ ISR(TIMER2_COMPA_vect){
         if(man_RX_sync_cnt > 10){
             man_RX_synced = 1;
         }
+
+        // set the debug pin
         if(man_RX_synced){
             SET(MAN_DBG_PIN_SYNC);
         }else{
             RESET(MAN_DBG_PIN_SYNC);
         }
 
+        ////////////////////////////////////////////////////////////////////////
         // limit RX bit counter to 0-7
         if( man_RXbitcnt > 7) {
             man_RXbitcnt = 0;
@@ -156,6 +162,7 @@ ISR(TIMER2_COMPA_vect){
             }
         }
 
+        ////////////////////////////////////////////////////////////////////////
         // do we have detected the start pattern
         // if so, we reset the bit counter to be in phase with the received data
         if (man_RX_bitbuffer == MAN_START_PATTERN){
@@ -172,7 +179,7 @@ ISR(TIMER2_COMPA_vect){
         man_RX_bit1 = IS_SET(MAN_RX_PIN);
     }
 
-    ////////////////////////////////////////////////////////////////////////////
+/******************************************************************************/
     // first half of the TX bit
     if(!man_TXbitphase) {
         man_TXbitphase = 1;
