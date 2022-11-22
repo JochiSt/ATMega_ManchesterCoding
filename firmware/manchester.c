@@ -25,7 +25,7 @@ void manchester_init(unsigned long datarate){
     RESET(MAN_DBG_PIN_CLK);
 
     uint8_t prescaler_cnt = 0;
-    uint8_t prescalers[7] = {1, 8, 32, 64, 128, 256, 1024};
+    uint16_t prescalers[7] = {1, 8, 32, 64, 128, 256, 1024};
 
     uint32_t f_cpu = F_CPU;
 
