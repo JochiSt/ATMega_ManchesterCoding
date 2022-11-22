@@ -47,19 +47,17 @@ int main(void){
 	while(1){
         SET(MAN_DBG_PIN_TRG);
         manchester_write_char(MAN_START_PATTERN);
-        /*
-        manchester_write_char(0b00110011);
-        manchester_write_char(0x00);
-        manchester_write_char(0xFF);
-        manchester_write_char(0x00);
-        */
-        manchester_write_char('H');
-        manchester_write_char('E');
-        manchester_write_char('L');
-        manchester_write_char('L');
-        manchester_write_char('O');
-        _delay_ms(50);
-
+        manchester_write_char('H'); //  0
+        manchester_write_char('E'); //  1
+        manchester_write_char('L'); //  2
+        manchester_write_char('L'); //  3
+        manchester_write_char('O'); //  4
+        manchester_write_char(' '); //  5
+        manchester_write_char('W'); //  6
+        manchester_write_char('O'); //  7
+        manchester_write_char('R'); //  8
+        manchester_write_char('L'); //  9
+        manchester_write_char('D'); // 10
         RESET(MAN_DBG_PIN_TRG);
 
         //usart_write_str(man_RX_buffer);
