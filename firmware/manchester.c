@@ -149,26 +149,15 @@ ISR(TIMER2_COMPA_vect){
         if( man_RXbitcnt > 7) {
             man_RXbitcnt = 0;
         }
-/*
+
         // do we have detected the start pattern
+        // if so, we reset the bit counter to be in phase with the received data
         if (man_RX_buffer == MAN_START_PATTERN){
-            SET(MAN_DBG_PIN_RX);
+            man_RXbitcnt = 0;
+            SET(MAN_DBG_PIN_HEAD);
         }else{
-            RESET(MAN_DBG_PIN_RX);
+            RESET(MAN_DBG_PIN_HEAD);
         }
-*/
-        /*
-        if (man_RX_synced){
-            // adjust our bit counter to match the start pattern
-            if (man_RX_buffer == MAN_START_PATTERN){
-                man_RXbitcnt = 8;
-            }
-            if( man_RXbitcnt > 8){
-                usart_write_char(man_RX_buffer);
-                man_RXbitcnt = 0;
-            }
-        }
-        */
     // second half of the RX bit
     }else{
         man_RXbitphase = 0;
