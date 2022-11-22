@@ -1,12 +1,15 @@
 /**
  * Manchester En- and decoding in firmware using an ATmega
  */
+
 #include "manchester.h"
 #include "io_manipulation.h"
 #include <avr/interrupt.h>
 
 /**
  * Initialize everything, that we can run the Manchester Encoding and Decoding
+ * @param datarate Rate of the 1B2B datastream
+ * TODO implement calculation of timer settings from function parameter
  */
 void manchester_init(unsigned long datarate){
 
@@ -115,7 +118,6 @@ ISR(TIMER2_COMPA_vect){
     if(!man_RXbitphase){
         man_RXbitphase = 1;
         man_RX_bit0 = IS_SET(MAN_RX_PIN);
-        // evaluate the received pattern
 
         ////////////////////////////////////////////////////////////////////////
         // evaluate the received pattern
@@ -141,6 +143,7 @@ ISR(TIMER2_COMPA_vect){
             man_RX_sync_cnt++;
         }
 
+        ////////////////////////////////////////////////////////////////////////
         // evaluate the synchronization counter
         if(man_RX_sync_cnt > 10){
             man_RX_synced = 1;
@@ -175,6 +178,7 @@ ISR(TIMER2_COMPA_vect){
         }else{
             RESET(MAN_DBG_PIN_HEAD);
         }
+
     // second half of the RX bit
     }else{
         man_RXbitphase = 0;
