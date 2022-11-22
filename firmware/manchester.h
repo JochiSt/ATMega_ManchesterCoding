@@ -26,6 +26,7 @@
 
 #define MAN_DBG_PIN_CLK B,0
 #define MAN_DBG_PIN_TRG D,7
+#define MAN_DBG_PIN_RX  D,6
 
 /**
  * @addtogroup RXvars Variables needed for receiving
