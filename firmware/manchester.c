@@ -59,9 +59,8 @@ void manchester_write_char(char c){
     }
     man_TXbyte = c;        // put the new byte into the TX chain
     man_TXbusy = 1;        // indicate that we want to transmit a new byte
-    // block until done
-    while(man_TXbusy){
-    }
+}
+
 /**
  * write a string via Manchester Coding
  * @param str string, which should be sent
