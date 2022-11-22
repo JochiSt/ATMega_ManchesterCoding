@@ -71,6 +71,12 @@ void manchester_write_str(char *str){
 	}
 }
 
+void manchester_TX_str(char* str){
+    manchester_write_char(MAN_START_PATTERN);
+    manchester_write_str(str);
+    manchester_write_char(MAN_STOP_PATTERN);
+}
+
 /**
  * reset the synchronization and by this force resynchronization
  */

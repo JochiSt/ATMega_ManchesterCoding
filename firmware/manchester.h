@@ -34,6 +34,8 @@
 #define REQ_SYNC_CNT        10
 // the start pattern must be 8 bit, because the write char function is used
 #define MAN_START_PATTERN   0b01010000
+// stop pattern is exactly the same than start pattern
+#define MAN_STOP_PATTERN    0b00001010
 
 volatile unsigned char man_RX_sync_cnt;   ///< counter of the sync bits
 volatile unsigned char man_RX_synced;     ///< are we synced
@@ -65,6 +67,11 @@ void manchester_init(unsigned long datarate);
 void manchester_resetSynchronization(void);
 void manchester_write_char(char c);
 void manchester_write_str(char *str);
+
+/**
+ * transmit a full string incl START and STOP pattern
+ */
+void manchester_TX_str(char* str);
 
 /**
  * @addtogroup IntFunc internal functions
