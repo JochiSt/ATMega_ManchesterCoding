@@ -25,7 +25,8 @@ void setup(void){
     usart_write("Compiliert at "__DATE__" - "__TIME__"\n");
 	usart_write("Compiliert with GCC Version "__VERSION__"\n");
 
-    manchester_init(0);
+    //manchester_init(100UL);
+    manchester_init(100000UL);
 
     // enable global interrupts
     sei();
