@@ -9,7 +9,6 @@
 /**
  * Initialize everything, that we can run the Manchester Encoding and Decoding
  * @param datarate Rate of the 1B2B datastream
- * TODO implement calculation of timer settings from function parameter
  */
 void manchester_init(unsigned long datarate){
 
