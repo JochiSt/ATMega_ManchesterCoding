@@ -1,7 +1,6 @@
 /**
- * Test implementation of software Manchester encoding and decoding
+ * @brief Test implementation of software Manchester encoding and decoding
  * @author JochiSt
- *
  */
 
 #include "usart.h"
@@ -12,6 +11,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 
+/// Pin, which indicates a new transmission
 #define MAN_DBG_PIN_TRG  D,7
 
 void setup(void){
