@@ -136,7 +136,7 @@ def analyse_pulse_width(vcd_files):
     plt.ylabel("entries")
     plt.xlabel(r'pulse width / \textmu s')
     plt.legend()
-    plt.savefig("ManchesterPulseWidth.png")
+    plt.savefig( vcd_files[0].replace('.vcd', '.png') )
     plt.tight_layout()
     plt.show()
 
